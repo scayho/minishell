@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelahce <abelahce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/06 08:06:57 by abelahce          #+#    #+#             */
-/*   Updated: 2022/08/20 04:20:09 by abelahce         ###   ########.fr       */
+/*   Created: 2021/11/20 23:04:56 by abelahce          #+#    #+#             */
+/*   Updated: 2022/08/20 04:19:59 by abelahce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strlen(const char	*str)
+void	*ft_calloc(size_t count, size_t size)
 {
-	size_t	i;
+	void	*str;
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+	str = malloc(count * size);
+	if (!str)
+		return (NULL);
+	ft_bzero(str, count * size);
+	return (str);
 }

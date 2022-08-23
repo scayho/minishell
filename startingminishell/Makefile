@@ -6,7 +6,7 @@
 #    By: abelahce <abelahce@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/11 15:26:20 by abelahce          #+#    #+#              #
-#    Updated: 2022/08/13 18:43:51 by abelahce         ###   ########.fr        #
+#    Updated: 2022/08/20 04:20:37 by abelahce         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,15 @@ SRC := main.c \
 		ft_putstr_fd.c \
 		ft_putnbr_fd.c \
 		ft_strncmp.c \
+		utils.c \
+		ft_atoi.c \
+		ft_substr.c	\
+		ft_strdup.c \
+		ft_bzero.c	\
 		ft_strlen.c \
+		ft_calloc.c \
+		ft_memcpy.c \
+
 		
 
 OBJ := $(SRC:.c=.o)

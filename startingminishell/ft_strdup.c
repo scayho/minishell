@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abelahce <abelahce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/06 08:06:57 by abelahce          #+#    #+#             */
-/*   Updated: 2022/08/20 04:20:09 by abelahce         ###   ########.fr       */
+/*   Created: 2021/11/20 23:35:30 by abelahce          #+#    #+#             */
+/*   Updated: 2022/08/22 01:09:50 by abelahce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strlen(const char	*str)
+char	*ft_strdup(const char *s1)
 {
-	size_t	i;
+	int		i;
+	char	*str;
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+	i = ft_strlen((char *)s1);
+	str = (char *)malloc(i + 1);
+	if (!str)
+		return (NULL);
+	ft_memcpy(str, (void *)s1, i);
+	return (str);
 }
