@@ -6,24 +6,11 @@
 /*   By: abelahce <abelahce@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 18:31:59 by abelahce          #+#    #+#             */
-/*   Updated: 2022/08/23 17:33:00 by abelahce         ###   ########.fr       */
+/*   Updated: 2022/08/24 17:25:04 by abelahce         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_echo(char *str)
-{
-	if (ft_strncmp(str, " -n ", ft_strlen(" -n ")) == 0)
-	{
-		ft_putstr(str + ft_strlen(" -n "));
-	}
-	else
-	{
-		ft_putstr(str);
-		ft_putchar('\n');
-	}
-}
 
 char	*ft_ignore_space(char *str)
 {
@@ -59,29 +46,6 @@ void	ft_reoutput(char	*str)
 	i = -1;
 	str = ft_ignore_space(str);
 	check_fals_name(str);
-}
-
-void	ft_env(t_info	*knew)
-{
-	int	i;
-
-	i = 0;
-	while (knew->anv[i] != NULL)
-		printf("%s\n", knew->anv[i++]);
-}
-
-int	checking_input(t_info	*knew)
-{
-	knew->command = ft_ignore_space(knew->command);
-	if (!ft_strlen(knew->command))
-		rl_on_new_line();
-	else if (ft_strncmp(knew->command, "exit", ft_strlen("env")) == 0)
-		exit(0);
-	else if (ft_strncmp(knew->command, "echo", ft_strlen("echo")) == 0)
-		ft_echo(knew->command + ft_strlen("echo"));
-	else if (ft_strncmp(knew->command, "env", ft_strlen("env")) == 0)
-		ft_env(knew);
-	return (0);
 }
 
 int	check_qotes(char *str)
@@ -120,79 +84,6 @@ int	parsing(char *str)
 	return (0);
 }
 
-int	pipes(char *str)
-{
-	int	i;
-	int	pi;
-
-	i = 0;
-	pi = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == 124)
-			pi++;
-		i++;
-	}
-	return (pi);
-}
-
-int fct(char *command, int index, int ascii)
-{
-	int	i;
-
-	i = index;
-	while (command[i] != 0 && command[i] != ascii)
-		i++;
-	if (command[i] == 0)
-		return (FAILDE);
-	return (i);
-}
-
-char *separate_command(t_info *knew)
-{
-	static int	i;
-	char		*lock;
-	int			j;
-
-	j = i;
-	knew->quto = 0;
-	knew->dquto = 0;
-	while (knew->command[i] != 0)
-	{
-		if (knew->command[i] == 34)
-			i = fct(knew->command, ++i, 34);
-		else if (knew->command[i] == 39)
-			i = fct(knew->command, ++i, 39);
-		if (i < 0)
-			exit(1);
-		if (knew->command[i] == 124)
-		{
-			lock = ft_substr(knew->command, j, i - j);
-			i++;
-			return (lock);
-		}
-		i++;
-	}
-	lock = ft_substr(knew->command, j, i - j);
-	i = 0;
-	knew->len = 0;
-	return (lock);
-}
-
-int	hamzaton(t_info *knew)
-{
-	int	i;
-
-	i = 0;
-	knew->len = ft_strlen(knew->command);
-	while (knew->len != 0)
-	{
-		knew->splited_command[i++] = separate_command(knew);
-	}
-	knew->splited_command[i] = NULL;
-	return (SUCCES);
-}
-
 int	check_spaces(char *str)
 {
 	int	i;
@@ -219,11 +110,11 @@ int	main(int ac, char **argv, char **envp)
 	check_loop = 0;
 	knew = malloc(sizeof(t_info));
 	if (!knew)
-		return (0);
+		return (FAILDE);
 	knew->anv = envp;
 	while (1)
 	{
-		knew->command = readline("./abelahce/minishell ");
+		knew->command = readline("./abelahce/minishell: ");
 		knew->command = ft_ignore_space(knew->command);
 		knew->lengh = ft_strlen(knew->command);
 		if (check_spaces(knew->command))
@@ -233,10 +124,14 @@ int	main(int ac, char **argv, char **envp)
 		if (parsing(knew->command))
 			continue ;
 		knew->splited_command = malloc (sizeof(char **) * pipes(knew->command));
+		if (!knew->splited_command)
+			continue ;
 		checking_input(knew);
-		hamzaton(knew);
+		split_pipes(knew);
+		int i = 0;
+		i = 0;
 	}
-	return (1);
+	return (SUCCES);
 }
 
 // ls -la dir | < in grep -B 10 pop | wc -l "psodsd | dsf ds"
