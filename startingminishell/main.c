@@ -41,9 +41,6 @@ void	check_fals_name(char	*str)
 
 void	ft_reoutput(char	*str)
 {
-	int	i;
-
-	i = -1;
 	str = ft_ignore_space(str);
 	check_fals_name(str);
 }
@@ -103,11 +100,9 @@ int	check_spaces(char *str)
 int	main(int ac, char **argv, char **envp)
 {
 	t_info			*knew;
-	int				check_loop;
 
 	(void) ac;
 	(void) argv;
-	check_loop = 0;
 	knew = malloc(sizeof(t_info));
 	if (!knew)
 		return (FAILDE);
@@ -128,8 +123,6 @@ int	main(int ac, char **argv, char **envp)
 			continue ;
 		checking_input(knew);
 		split_pipes(knew);
-		int i = 0;
-		i = 0;
 	}
 	return (SUCCES);
 }

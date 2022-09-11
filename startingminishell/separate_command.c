@@ -71,11 +71,11 @@ char *separate_command(t_info *knew)
 
 int	split_pipes(t_info *knew)
 {
-	struct t_node *head;
+	// struct t_node *head;
 	int	i;
 
 	i = 0;
-	head = NULL;
+	// head = NULL;
 	knew->len = 1;
 	while (knew->len)
 		knew->splited_command[i++] = separate_command(knew);

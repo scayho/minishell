@@ -64,9 +64,10 @@ void    indentify_var(t_info *knew)
                 i = ignore_sqoute(knew->splited_command[j], i);
             if (knew->splited_command[j][i] == DOLLAR)
             {
-                i = take_varibale(knew->splited_command[j][i], i);
+                // i = take_varibale(knew->splited_command[j][i], i);
                 
             }
+            i++;
         }
         j++;
     }
